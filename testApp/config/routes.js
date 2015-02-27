@@ -12,7 +12,7 @@ module.exports.routes = {
   '/signup': {
     view: 'signup'
   },
-  'login': {
+  '/login': {
     view: 'login'
   }
 };

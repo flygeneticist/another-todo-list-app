@@ -8,7 +8,12 @@
 module.exports = {
 
   attributes: {
-
+    id: 'INT',
+    title: 'STRING',
+    description: 'STRING',
+    listId: 'INT',
+    dueDate: 'DATE',
+    complete: 'BOOLEAN',
+    active: 'BOOLEAN'
   }
 };
-
