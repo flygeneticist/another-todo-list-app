@@ -7,12 +7,12 @@
 
 module.exports = {
     index: function (req, res) {
-        res.view('hompage');
+        res.view();
     },
     login: function (req, res) {
-        res.view('login');
+        res.view();
     },
     signup: function (req, res) {
-        res.view('signup');
+        res.view();
     }
 };
