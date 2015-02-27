@@ -7,12 +7,15 @@
 
 module.exports.routes = {
   '/': {
-    view: 'homepage'
+    controller: 'main',
+    action: 'index'
   },
   '/signup': {
-    view: 'signup'
+    controller: 'main',
+    action: 'signup'
   },
   '/login': {
-    view: 'login'
+    controller: 'main',
+    action: 'login'
   }
 };

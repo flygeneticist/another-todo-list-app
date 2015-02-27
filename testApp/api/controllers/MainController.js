@@ -6,6 +6,13 @@
  */
 
 module.exports = {
-	
+    index: function (req, res) {
+        res.view('hompage');
+    },
+    login: function (req, res) {
+        res.view('login');
+    },
+    signup: function (req, res) {
+        res.view('signup');
+    }
 };
-
