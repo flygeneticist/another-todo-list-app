@@ -9,29 +9,54 @@ module.exports = {
         res.view();
     },
     login: function (req, res) {
-        if (req.method == "GET") {
-            res.view();
-        } else if (req.method == "POST" && loginUser(req)) {
-            // redrect to the home page
-            req.flash("message", "You have logged in successfully!")
-            res.redirect(307, "main/index");
-        } else {
-            // return to the login page with errors
-            req.flash("error", "Error logging in. Please check your email/password and try again.")
-            res.view();
-        }
+        var email = req.param("email");
+        var password = req.param("password");
+
+        Users.findByEmail(email).done(function (err, usr) {
+            if (err) {
+                res.send(500, { error: "Database error." });
+            } else {
+                if (usr) {
+                    var hasher = require("password-hash");
+                    if (hasher.verify(password, usr.password)) {
+                        req.session.user = usr;
+                        res.send(usr);
+                    } else {
+                        res.send(400, { error: "Wrong password." });
+                    }
+                } else {
+                    res.send(404, { error: "User not found." });
+                }
+            }
+        });
     },
     signup: function (req, res) {
-        if (req.method == "GET") {
-            res.view();
-        } else if (req.method == "POST" && signupUser(req)) {
-            // redrect to the home page with welcome alert
-            req.flash("message", "You have signed up successfully! Please check your email for a confirmation link.")
-            res.redirect(307, "main/index");
+        var email = req.param("email");
+        var password = req.param("password");
+        var passwordConfirm = req.param("passwordConfirm");
+
+        if (password == passwordConfirm) {
+            Users.findByEmail(email).done(function (err, usr) {
+                if (err) {
+                    res.send(500, { error: "Database Error." });
+                } else if (usr) {
+                    res.send(400, {error: "Email is already taken."});
+                } else {
+                    var hasher = require("password-hash");
+                    password = hasher.generate(password);
+
+                    Users.create({email: email, password: password}).done(function (error, user) {
+                        if (error) {
+                            res.send(500, {error: "Database Error."});
+                        } else {
+                            req.session.user = user;
+                            res.send(user);
+                        }
+                    });
+                }
+            });
         } else {
-            // return to the signup page with errors
-            req.flash("error", "Error signing up. Please check your email/password and try again.")
-            res.view();
+            res.send(400, {error: "Passwords must match"});
         }
     }
-};
+}
