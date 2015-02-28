@@ -6,7 +6,7 @@
  */
 module.exports = {
     index: function (req, res) {
-        res.view({title: "Home"});
+        res.view();
     },
     login: function (req, res) {
         if (req.method == "POST") {
@@ -31,7 +31,7 @@ module.exports = {
             });
         }
         else {
-            res.view({title: "Login"});
+            res.view();
         }
     },
     signup: function (req, res) {
@@ -60,7 +60,7 @@ module.exports = {
                 }
             });
         } else {
-            res.view({title: "Sign up"});
+            res.view();
         }
     }
 }
