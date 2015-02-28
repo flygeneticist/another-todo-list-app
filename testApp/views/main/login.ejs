@@ -1,10 +1,30 @@
 <div id="loginForm">
     <h3>Login</h3>
-    <form class="form" method="POST" onSubmit="/login">
-        <label id="email"></label>
+    <form class="form"><!--  method="POST" onSubmit="/login"> -->
+        <label name="email">Email</label>
         <input id="email" type="text" placeholder="you@domain.com"></input><br>
-        <label id="password"></label>
+        <label name="password">Password</label>
         <input id="password" type="password"></input><br>
-        <button type="submit" class="btn btn-default">Submit</button>
+        <button id="loginButton" type="submit" class="btn btn-default">Submit</button>
     </form>
 </div>
+
+<script>
+    $("#loginButton").click(function () {
+        var email = $("#email").val();
+        var password = $("#password").val();
+        if (email && password) {
+            $.post(
+                '/login',
+                {email: email, password:password},
+                function () {
+                    window.location = "/login";
+                }
+            ).fail(function (res) {
+                alert("Error: " + res.getResponseHeader("error"));
+            });
+        } else {
+            alert("An email and password are required");
+        }
+    });
+</script>
