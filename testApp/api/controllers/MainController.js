@@ -10,9 +10,29 @@ module.exports = {
         res.view();
     },
     login: function (req, res) {
-        res.view();
+        if(req.method == "POST" && loginUser(req)) {
+            // redrect to the home page
+            res.view("main/index");
+        } else {
+            // return to the login page with errors
+            res.view();
+        }
     },
     signup: function (req, res) {
-        res.view();
+        if(req.method == "POST" && signupUser(req)) {
+            // redrect to the home page with welcome alert
+            res.view("main/index");
+        } else {
+            // return to the signup page with errors
+            res.view();
+        }
     }
+};
+
+function signupUser(req) {
+    return true;
+};
+
+function loginUser(req) {
+    return true;
 };
