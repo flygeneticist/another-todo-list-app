@@ -5,27 +5,94 @@
     <% if (lists.length == 0) { %>
         <h3>You have no active lists! :( <br>Click the button below to make a new list now.</h3>
     <% } %>
-    <h3><button id="newListButton" class="btn btn-info">Make a New List!</a></h3>
+    <h3><button id="newListBtn" class="btn btn-info">Make a New List!</a></h3>
 </div>
 <div id="master-box" class="container">
     <% _.each(lists, function (list) { %>
-        <div id="list-box" class="container">
-            <h4 id="list-title"><%= list.title %></h4>
-            <button class="btn btn-xs btn-danger">Delete</button>
+        <div id="list-box" class="row">
+            <div id="list-header" class="row">
+                <div id="list-title" class="col-md-9">
+                    <h3 id="list-title"><%= list.title %></h3>
+                </div>
+                <div id="list-edits" class="col-md-3">
+                    <button id="itemCntBtn" class="btn btn-primary btn-sm" type="button">
+                        Items <span class="badge"><%= (list.items).length %></span>
+                    </button>
+                    <button id="addItemBtn" class="btn btn-sm btn-success">New Item</button>
+                    <button id="deleteListBtn" class="btn btn-sm btn-danger">Delete</button>
+                </div>
+            </div>
+            <div id="list-items" class="container row">
+                <div class="col-md-10">
+                    <table id="item-table" class="table table-striped table-hover">
+                        <tr>
+                            <th>Title</th>
+                            <th>Description</th>
+                            <th>Due Date</th>
+                            <th>Complete</th>
+                        </tr>
+                        <% if ((list.items).length > 0) { %>
+                            <% _.each(list.items, function (item) { %>
+                                <tr id="item-row">
+                                    <td><%= item.title %></td>
+                                    <td><%= item.description %></td>
+                                    <td><%= item.dueDate %></td>
+                                    <td>
+                                        <% if (item.complete) { %>
+                                            OK
+                                        <% } else { %>
+                                            DUE!
+                                        <% } %>
+                                    </td>
+                                </tr>
+                            <% }); %>
+                        <% } else { %>
+                            <tr>
+                                <td>No items added yet! :(</td>
+                            </tr>
+                        <% } %>
+                    </table>
+                </div>
+            </div>
         </div>
     <% }); %>
 </div>
 
 <script type="text/javascript">
-    $("#list-title").on("click", function (){
-        $(this).parent('div').fadeOut();
+/*
+ * Deletes the list on clicking button
+*/
+    $(document).on("click", "#deleteListBtn", function (){
+        $(this).parents('#list-box').fadeOut();
     });
 </script>
 
 <script type="text/javascript">
-    $("#newListButton").on("click", function () {
+/*
+ * Toggles the list's items into view on clicking button
+*/
+    $(document).on("click", "#addItemBtn", function (){
+        alert("TO DO: Add a item to the child table on click...");
+        $(this).children('#table tr:last').after('<tr id="item-row"><td>New Item</td><td>description...</td><td>03/01/2015</td><td>DUE!</td></tr>');
+    });
+</script>
+
+<script type="text/javascript">
+/*
+ * Creates a new list on clicking button
+*/
+    $("#newListBtn").on("click", function () {
         // AJAX call to make new list item in DB
-        $("#master-box").append('<div id="list-box" class="container"><h4 id="list-title">new list...</h4></div>')
         //append div to view
-    }
+        $("#master-box").append('<div id="list-box" class="row"><div id="list-header" class="row"><div id="list-title" class="col-md-9"><h3 id="list-title">New List</h3></div><div id="list-edits" class="col-md-3"><button id="itemCntBtn" class="btn btn-primary btn-sm" type="button">Items <span class="badge">0</span></button><button id="addItemBtn" class="btn btn-sm btn-success">New Item</button><button id="deleteListBtn" class="btn btn-sm btn-danger">Delete</button></div></div><div id="list-items" class="container row"><div class="col-md-10"><table id="item-table" class="table table-striped table-hover"><tr><th>Title</th><th>Description</th><th>Due Date</th><th>Complete</th></tr><tr>No items added yet! :(</tr></table></div></div></div>');
+    });
+</script>
+
+<script type="text/javascript">
+/*
+ * Toggles the list's items visability on clicking button
+*/
+    $(document).on("click", "#itemCntBtn", function (){
+        $($(this).parents('#list-box')).children("#list-items").toggle();
+    });
 </script>

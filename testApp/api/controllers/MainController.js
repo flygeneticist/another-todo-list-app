@@ -9,7 +9,20 @@ module.exports = {
     index: function (req, res) {
         res.view('main/index', {
             user: null,
-            lists: [{title:"List1"},{title:"List2"}]
+            lists: [
+                {id: 1,
+                 title:"Daily Tasks List",
+                 items: [
+                    {id: 1, title: "Wash the car", description:"", list: 1, dueDate: "03/01/2015", complete: false},
+                    {id: 2, title: "Buy food for dinner", description:"", list: 1, dueDate: "03/02/2015", complete: true},
+                    {id: 3, title: "Finsh To-Do List App", description:"", list: 1, dueDate: "03/06/2015", complete: false}
+                    ]
+                },
+                {id: 2,
+                 title:"Long Term Goals",
+                 items: []
+                }
+            ]
         });
     },
     login: function (req, res) {
