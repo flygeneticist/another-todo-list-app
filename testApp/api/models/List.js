@@ -23,10 +23,10 @@ module.exports = {
             type: 'string',
             required: true
         },
-        userId: {
-            model: 'User',
-            required: true
-        },
+        // userId: {
+        //     model: 'User',
+        //     required: true
+        // },
         active: {
             type: 'int',
             defaultsTo: true
