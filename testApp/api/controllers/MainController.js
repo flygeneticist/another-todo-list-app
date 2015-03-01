@@ -4,6 +4,7 @@
  * @description :: Server-side logic for managing mains
  * @help        :: See http://links.sailsjs.org/docs/controllers
  */
+
 module.exports = {
     index: function (req, res) {
         res.view();
@@ -13,7 +14,7 @@ module.exports = {
             var email = req.param("email");
             var password = req.param("password");
 
-            Users.findByEmail(email).done(function (err, usr) {
+            User.findByEmail(email).done(function (err, usr) {
                 if (err) {
                     res.send(500, { error: "Database error." });
                 } else {
@@ -40,7 +41,7 @@ module.exports = {
             var password = req.param("password");
             var passwordConfirm = req.param("passwordConfirm");
 
-            Users.findByEmail(email).done(function (err, usr) {
+            User.findByEmail(email).done(function (err, usr) {
                 if (err) {
                     res.send(500, { error: "Database Error." });
                 } else if (usr) {
@@ -49,7 +50,7 @@ module.exports = {
                     var hasher = require("password-hash");
                     password = hasher.generate(password);
 
-                    Users.create({email: email, password: password, dateCreated: Date.now(), active: true}).done(function (error, user) {
+                    User.create({email: email, password: password, dateCreated: Date.now(), active: true}).done(function (error, user) {
                         if (error) {
                             res.send(500, {error: "Database Error."});
                         } else {
