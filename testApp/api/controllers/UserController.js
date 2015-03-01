@@ -13,9 +13,8 @@ module.exports = {
   },
 
   create: function (req, res) {
-    User.create({email:"test@test.com", password:"test"});
     return res.json({
-      todo: 'create() is not implemented yet....but we still snuck in a user. ;)'
+      todo: 'create() is not implemented yet!'
     });
   },
 
