@@ -19,9 +19,12 @@
           </a>
         </div>
         <div class="navbar-text navbar-right">
-          <a href="/signup">Sign Up</a>
-          |
-          <a href="/login">Login</a>
+          <% if (!user) { %>
+            <button class="btn btn-md btn-success" href="/signup">Sign Up</button>
+            <button class="btn btn-md btn-info" href="/login">Login</button>
+          <% } else { %>
+            Welcome, <%= user.name %>!
+          <% } %>
         </div>
       </div>
     </nav>
