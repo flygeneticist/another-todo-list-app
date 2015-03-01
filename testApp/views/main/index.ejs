@@ -1,4 +1,31 @@
 <div id="main">
-    <h3>You are on the main page!</h3>
-    <p>Please login or sign-up to save your lists.</p>
+    <% if (!user) { %>
+        <h3>Please login or sign-up to save your lists.</h3>
+    <% } %>
+    <% if (lists.length == 0) { %>
+        <h3>You have no active lists! :( <br>Click the button below to make a new list now.</h3>
+    <% } %>
+    <h3><button id="newListButton" class="btn btn-info">Make a New List!</a></h3>
 </div>
+<div id="master-box" class="container">
+    <% _.each(lists, function (list) { %>
+        <div id="list-box" class="container">
+            <h4 id="list-title"><%= list.title %></h4>
+            <button class="btn btn-xs btn-danger">Delete</button>
+        </div>
+    <% }); %>
+</div>
+
+<script type="text/javascript">
+    $("#list-title").on("click", function (){
+        $(this).parent('div').fadeOut();
+    });
+</script>
+
+<script type="text/javascript">
+    $("#newListButton").on("click", function () {
+        // AJAX call to make new list item in DB
+        $("#master-box").append('<div id="list-box" class="container"><h4 id="list-title">new list...</h4></div>')
+        //append div to view
+    }
+</script>

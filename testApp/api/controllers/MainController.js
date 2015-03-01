@@ -7,7 +7,10 @@
 
 module.exports = {
     index: function (req, res) {
-        res.view();
+        res.view('main/index', {
+            user: null,
+            lists: [{title:"List1"},{title:"List2"}]
+        });
     },
     login: function (req, res) {
         if (req.method == "POST") {
