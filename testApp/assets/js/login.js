@@ -12,21 +12,3 @@ $(document).ready(function () {
         }
     });
 });
-
-$("#loginButton").on("click", function () {
-    var email = $("#email").val();
-    var password = $("#password").val();
-    if (email && password) {
-        $.post(
-            '/login',
-            {email: email, password:password},
-            function () {
-                window.location = "/";
-            }
-        ).fail(function (res) {
-            alert("Error: " + res.getResponseHeader("error"));
-        });
-    } else {
-        alert("An email and password are required.");
-    }
-});

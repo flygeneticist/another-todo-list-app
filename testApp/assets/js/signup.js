@@ -16,27 +16,3 @@ $(document).ready(function () {
         }
     });
 });
-
-function signupUser() {
-    var email = $("#email").val();
-    var password = $("#password").val();
-    var passwordConfirm = $("#passwordConfirm").val();h
-
-    if (email && password && passwordConfirm) {
-        if (password == passwordConfirm) {
-            $.post(
-                '/signup',
-                {email: email, password:password},
-                function () {
-                    window.location = "/";
-                }
-            ).fail(function (res) {
-                alert("Error: " + res.getResponseHeader("error"));
-            });
-        } else {
-            alert("Passwords must match.");
-        }
-    } else {
-        alert("An email and both password fields are required.");
-    }
-};
