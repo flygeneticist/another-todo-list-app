@@ -18,8 +18,25 @@ module.exports = {
    * `ListsController.create()`
    */
   create: function (req, res) {
-    return res.json({
-      todo: 'create() is not implemented yet!'
+    var title = req.param("title");
+    var userId = req.param("userId");
+
+    List.findOneByTitle(title, function (err, list) {
+      if (err) {
+        res.send(500, { error: "Database look-up error." });
+      } else if (list) {
+        res.send(400, {error: "A list with that title already exists."});
+      } else {
+        List.create({title: title, user: userId}, function (error, lst) {
+          if (error) {
+            res.send(500, {error: "Database creation error.",
+                           msg: error}
+            );
+          } else {
+            res.send(200, {new_list: lst});
+          }
+        });
+      }
     });
   },
 /**

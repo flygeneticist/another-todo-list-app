@@ -10,22 +10,13 @@ module.exports = {
     autoCreatedAt: true,
     autoUpdatedAt: true,
     attributes: {
-        id: {
-            type: 'int',
-            primaryKey: true,
-            required: true
-        },
         title: {
                 type: 'string',
                 required: true
         },
-        // userId: {
-        //     model: 'User',
-        //     required: true
-        // },
-        active: {
-            type: 'int',
-            defaultsTo: true
+        user: {
+            model: 'User',
+            required: true
         }
     }
 };

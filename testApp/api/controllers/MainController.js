@@ -7,22 +7,15 @@
 
 module.exports = {
     index: function (req, res) {
-        res.view('main/index', {
-            user: null,
-            lists: [
-                {id: 1,
-                 title:"Daily Tasks List",
-                 items: [
-                    {id: 1, title: "Wash the car", description:"", list: 1, dueDate: "03/01/2015", complete: false},
-                    {id: 2, title: "Buy food for dinner", description:"", list: 1, dueDate: "03/02/2015", complete: true},
-                    {id: 3, title: "Finsh To-Do List App", description:"", list: 1, dueDate: "03/06/2015", complete: false}
-                    ]
-                },
-                {id: 2,
-                 title:"Long Term Goals",
-                 items: []
-                }
-            ]
+        List.findAll(function (err, lists) {
+            if (err) {
+                    res.send(500, { error: "Database error." });
+            } else {
+                res.view('main/index', {
+                    user: null,
+                    lists: lists
+                });
+            }
         });
     },
     login: function (req, res) {
@@ -30,7 +23,7 @@ module.exports = {
             var email = req.param("email");
             var password = req.param("password");
 
-            User.findByEmail(email).done(function (err, usr) {
+            User.findOneByEmail(email).done(function (err, usr) {
                 if (err) {
                     res.send(500, { error: "Database error." });
                 } else {
@@ -57,7 +50,7 @@ module.exports = {
             var password = req.param("password");
             var passwordConfirm = req.param("passwordConfirm");
 
-            User.findByEmail(email).done(function (err, usr) {
+            User.findOneByEmail(email).done(function (err, usr) {
                 if (err) {
                     res.send(500, { error: "Database Error." });
                 } else if (usr) {
@@ -66,7 +59,7 @@ module.exports = {
                     var hasher = require("password-hash");
                     password = hasher.generate(password);
 
-                    User.create({email: email, password: password, dateCreated: Date.now(), active: true}).done(function (error, user) {
+                    User.create({email: email, password: password}).done(function (error, user) {
                         if (error) {
                             res.send(500, {error: "Database Error."});
                         } else {

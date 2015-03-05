@@ -8,32 +8,22 @@
 module.exports = {
     tableName: 'items',
     attributes: {
-        id: {
-            type:'int',
-            primaryKey: true,
-            required: true
-        },
         title: {
             type: 'string',
             required: true
         },
-        description: {
-            type: 'string'
-        },
-        list: {
+        listId: {
             model: 'List',
             required: true
         },
         dueDate: {
-            type:'datetime'
+            type:'datetime',
+            defaultsTo: null
         },
         complete: {
             type:'boolean',
-            defaultsTo: false
-        },
-        active: {
-            type:'boolean',
-            defaultsTo: true
+            defaultsTo: false,
         }
     }
 };
+

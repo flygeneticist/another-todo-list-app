@@ -13,8 +13,27 @@ module.exports = {
   },
 
   create: function (req, res) {
-    return res.json({
-      todo: 'create() is not implemented yet!'
+    var email = req.param("email");
+    var password = req.param("password");
+
+    User.findOneByEmail(email, function (err, usr) {
+      if (err) {
+        res.send(500, { error: "Database error." });
+      } else if (usr) {
+        res.send(400, {error: "Email is already taken."});
+      } else {
+        var hasher = require("password-hash");
+        password = hasher.generate(password);
+
+        User.create({email: email, password: password}, function (error, user) {
+          if (error) {
+            res.send(500, {error: "Database Error."});
+          } else {
+            req.session.user = user;
+            res.send(200, {new_user: user});
+          }
+        });
+      }
     });
   },
 

@@ -44,7 +44,7 @@ module.exports.connections = {
     adapter: 'sails-mongo',
     host: 'localhost',
     port: 27017,
-    database: 'mySailsDB'
+    database: 'devToDoListDB'
     // user: 'username',
     // password: 'password',
   },
