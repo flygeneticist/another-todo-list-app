@@ -7,9 +7,7 @@
 module.exports = {
 
   index: function (req, res) {
-    return res.json({
-      todo: 'index() is not implemented yet!'
-    });
+    return res.forbidden();
   },
 
   create: function (req, res) {
@@ -38,21 +36,15 @@ module.exports = {
   },
 
   show: function (req, res) {
-    return res.json({
-      todo: 'show() is not implemented yet!'
-    });
+    return res.forbidden();
   },
 
   edit: function (req, res) {
-    return res.json({
-      todo: 'edit() is not implemented yet!'
-    });
+    return res.forbidden();
   },
 
   delete: function (req, res) {
-    return res.json({
-      todo: 'delete() is not implemented yet!'
-    });
+    return res.forbidden();
   }
 };
 

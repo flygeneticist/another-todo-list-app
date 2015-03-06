@@ -10,9 +10,7 @@ module.exports = {
    * `ListsController.index()`
    */
   index: function (req, res) {
-    return res.json({
-      todo: 'index() is not implemented yet!'
-    });
+    return res.forbidden();
   },
 /**
    * `ListsController.create()`
@@ -43,25 +41,19 @@ module.exports = {
    * `ListsController.show()`
    */
   show: function (req, res) {
-    return res.json({
-      todo: 'show() is not implemented yet!'
-    });
+    return res.forbidden();
   },
 /**
    * `ListsController.edit()`
    */
   edit: function (req, res) {
-    return res.json({
-      todo: 'edit() is not implemented yet!'
-    });
+    return res.forbidden();
   },
 /**
    * `ListsController.delete()`
    */
   delete: function (req, res) {
-    return res.json({
-      todo: 'delete() is not implemented yet!'
-    });
+    return res.forbidden();
   }
 };
 
