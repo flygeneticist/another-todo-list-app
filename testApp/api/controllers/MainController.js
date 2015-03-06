@@ -18,6 +18,7 @@ module.exports = {
             }
         });
     },
+
     login: function (req, res) {
         if (req.method == "POST") {
             var email = req.param("email");
@@ -44,33 +45,8 @@ module.exports = {
             res.view();
         }
     },
+
     signup: function (req, res) {
-        if (req.method == "POST") {
-            var email = req.param("email");
-            var password = req.param("password");
-            var passwordConfirm = req.param("passwordConfirm");
-
-            User.findOneByEmail(email).done(function (err, usr) {
-                if (err) {
-                    res.send(500, { error: "Database Error." });
-                } else if (usr) {
-                    res.send(400, {error: "Email is already taken."});
-                } else {
-                    var hasher = require("password-hash");
-                    password = hasher.generate(password);
-
-                    User.create({email: email, password: password}).done(function (error, user) {
-                        if (error) {
-                            res.send(500, {error: "Database Error."});
-                        } else {
-                            req.session.user = user;
-                            res.send(user);
-                        }
-                    });
-                }
-            });
-        } else {
-            res.view();
-        }
+        res.view('main/signup');
     }
 }

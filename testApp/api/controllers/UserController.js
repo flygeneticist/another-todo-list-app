@@ -18,7 +18,7 @@ module.exports = {
 
     User.findOneByEmail(email, function (err, usr) {
       if (err) {
-        res.send(500, { error: "Database error." });
+        res.send(500, { error: "Database connection error." });
       } else if (usr) {
         res.send(400, {error: "Email is already taken."});
       } else {
@@ -27,7 +27,7 @@ module.exports = {
 
         User.create({email: email, password: password}, function (error, user) {
           if (error) {
-            res.send(500, {error: "Database Error."});
+            res.send(500, {error: "Database write error."});
           } else {
             req.session.user = user;
             res.send(200, {new_user: user});
