@@ -19,11 +19,11 @@
           </a>
         </div>
         <div class="navbar-text navbar-right">
-          <% if (req.session.user) { %>
+          <% if (!req.session.user) { %>
             <button class="btn btn-md btn-success"><a href="/signup">Sign Up</a></button>
             <button class="btn btn-md btn-info"><a href="/login">Login</a></button>
           <% } else { %>
-            Welcome, <%= req.session.user %>!
+            Welcome, <%= req.session.user.email %>!
           <% } %>
         </div>
       </div>
