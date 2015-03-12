@@ -10,7 +10,7 @@ module.exports = {
         if (req.session.user) {
             List.find({ where: { user: req.session.user.email }}, function (err, lists) {
                 if (err) {
-                    res.send(500, { error: "Database error." });
+                    res.serverError("Database error.");
                 }
             });
         }
@@ -30,7 +30,7 @@ module.exports = {
 
             User.findOneByEmail(email, function (err, usr) {
                 if (err) {
-                    res.send(500, { error: "Database error." });
+                    res.serverError("Database error.");
                 } else {
                     if (usr) {
                         var hasher = require("password-hash");
@@ -40,7 +40,7 @@ module.exports = {
                             res.redirect(307, '/');
                         }
                         else {
-                            res.send(400, { error: "Email / password combination is not correct." });
+                            res.view('main/login', { error: "Email / password combination is not correct." });
                         }
                     }
                 }
@@ -49,6 +49,10 @@ module.exports = {
         else {
             res.view();
         }
+    },
+    logout: function (req, res) {
+        req.session.user = null;
+        res.redirect(307, '/');
     },
 
     signup: function (req, res) {

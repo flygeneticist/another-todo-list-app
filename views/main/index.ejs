@@ -1,5 +1,5 @@
 <div id="main">
-    <% if (!user) { %>
+    <% if (!req.session.user) { %>
         <h3>Please login or sign-up to save your lists.</h3>
     <% } %>
     <% if (!lists || lists == []) { %>
@@ -15,7 +15,13 @@
             <form id="newListForm" class="form" method="POST" onsubmit="/list/create">
                 <label>List Title:</label>
                 <input id="title" name="title" type="text">
-                <input id="userId" name="userId" type="hidden" value=<%= user %>>
+                <input id="userId" name="userId" type="hidden" value=
+                    <% if (!req.session.user) { %>
+                        <%= "temp-user" %>
+                    <% } else { %>
+                        <%= req.session.user.email %>
+                    <% } %>
+                >
                 <button id="newListSubmit" class="btn btn-info list-trigger"type="submit" value="Sumbit">Submit</button>
             </form>
         </section>

@@ -16,19 +16,20 @@ module.exports = {
 
     User.findOneByEmail(email, function (err, usr) {
       if (err) {
-        res.send(500, { error: "Database connection error." });
+        res.serverError("Database connection error.");
       } else if (usr) {
-        res.send(400, {error: "Email is already taken."});
+        res.badRequest("Email is already taken.", "/signup");
       } else {
         var hasher = require("password-hash");
         password = hasher.generate(password);
 
         User.create({email: email, password: password}, function (error, user) {
           if (error) {
-            res.send(500, {error: "Database write error."});
+            res.serverError("Database write error.");
           } else {
             req.session.user = user;
-            res.send(200, {new_user: user});
+            req.session.authenticated = true;
+            res.redirect(307, '/');
           }
         });
       }

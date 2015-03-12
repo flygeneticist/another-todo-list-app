@@ -10,5 +10,6 @@ module.exports.routes = {
   'get /signup': {controller: 'main', action: 'signup'},
   'post /signup': {controller: 'user', action: 'create'},
   'get /login': {view: 'main/login'},
-  'post /login': {controller: 'main', action: 'login'}
+  'post /login': {controller: 'main', action: 'login'},
+  'get /logout': {controller: 'main', action: 'logout'}
 };

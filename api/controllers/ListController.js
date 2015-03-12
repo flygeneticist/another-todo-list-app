@@ -16,13 +16,16 @@ module.exports = {
    * `ListsController.create()`
    */
   create: function (req, res) {
+    console.log("Creating method entered");
     var title = req.param("title");
+    console.log("Title: "+title);
     var userId = req.param("userId");
-    List.create({title: title, user: userId}, function (error, lst) {
+    console.log("user ID: "+userId);
+    List.create({title: title, user: userId}, function (error, lists) {
       if (error) {
-        res.send(500, {error: "Database creation error.", msg: error});
+        res.serverError("Database write error.");
       } else {
-        res.send(200, {list: lst});
+        res.redirct(307, '/', {list: lists});
       }
     });
   },
