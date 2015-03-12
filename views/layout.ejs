@@ -31,11 +31,11 @@
     </nav>
 
     <div class="container" style="padding-top: 70px;">
-      <div class="alert-info">
+      <!-- <div class="alert-info">
         <%- req.flash('message') %>
-      </div>
+      </div> -->
       <div class="alert-warning">
-        <%- req.flash('error') %>
+        <%= req.flash('errors') %>
       </div>
       <%- body %>
     </div>

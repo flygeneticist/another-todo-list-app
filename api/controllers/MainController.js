@@ -40,7 +40,7 @@ module.exports = {
                             res.redirect(307, '/');
                         }
                         else {
-                            res.view('main/login', { error: "Email / password combination is not correct." });
+                            res.badRequest("Email / password combination is not correct.", 'main/login');
                         }
                     }
                 }

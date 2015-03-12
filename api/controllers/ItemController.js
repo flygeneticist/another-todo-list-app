@@ -20,13 +20,8 @@ module.exports = {
     var listId = req.param("listId");
 
     Item.create({ title: title, listId: listId}, function (error, item) {
-      if (error) {
-        res.send(500, {error: "Database creation error.",
-                       msg: error}
-        );
-      } else {
-        res.send(200, {new_item: item});
-      }
+      if (error) res.serverError("Database creation error.");
+      else res.send(200, {new_item: item});
     });
   },
 /**
