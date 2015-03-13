@@ -11,12 +11,13 @@ module.exports = {
     autoUpdatedAt: true,
     attributes: {
         title: {
-                type: 'string',
-                required: true
-        },
-        user: {
             type: 'string',
             required: true
-        }
+        },
+        user: {
+            model: 'User',
+            required: true
+        },
+        items: {collection: 'Item'}
     }
 };

@@ -17,9 +17,17 @@ module.exports = {
    */
   create: function (req, res) {;
     var title = req.param("title");
-    var userId = req.param("userId");
+    var user = User.findOneByEmail(req.param("userId"), function (err, usr) {
+                    if (err) {
+                      res.serverError("Database error.");
+                    } else {
+                        if (usr) {
+                            // done
+                        }
+                    }
+                });
 
-    List.create({title: title, user: userId}, function (error, lists) {
+    List.create({title: title, user: user}, function (error, lists) {
       if (error) {
         res.serverError("Database write error.");
       } else {

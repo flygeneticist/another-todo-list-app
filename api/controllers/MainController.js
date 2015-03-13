@@ -8,7 +8,7 @@
 module.exports = {
     index: function (req, res) {
         if (req.session.user) {
-            List.findByUser(req.session.user.email).exec(function (err, list) {
+            List.find(req.session.user).exec(function (err, list) {
                 if (err) {
                     res.serverError("Database error.");
                 } else {
