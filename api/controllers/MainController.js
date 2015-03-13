@@ -8,15 +8,17 @@
 module.exports = {
     index: function (req, res) {
         if (req.session.user) {
-            List.find({ where: { user: req.session.user.email }}, function (err, lists) {
+            List.findByUser(req.session.user.email).exec(function (err, list) {
                 if (err) {
                     res.serverError("Database error.");
+                } else {
+                    var lists = list;
                 }
             });
-        }
-        else {
+        } else {
             var lists = [];
         }
+        console.log("User\'s Lists:" + lists);
         return res.view('main/index', {
             user: req.session.user,
             lists: lists
