@@ -15,17 +15,15 @@ module.exports = {
 /**
    * `ListsController.create()`
    */
-  create: function (req, res) {
-    console.log("Creating method entered");
+  create: function (req, res) {;
     var title = req.param("title");
-    console.log("Title: "+title);
     var userId = req.param("userId");
-    console.log("user ID: "+userId);
+
     List.create({title: title, user: userId}, function (error, lists) {
       if (error) {
         res.serverError("Database write error.");
       } else {
-        res.redirct(307, '/', {list: lists});
+        res.redirect(307, '/');
       }
     });
   },
