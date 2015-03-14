@@ -8,28 +8,28 @@
 module.exports = {
     index: function (req, res) {
         if (req.session.user) {
-            List.find(req.session.user).exec(function (err, list) {
+            List.find({where: {user: req.session.user.email}}, function (err, list) {
                 if (err) {
                     res.serverError("Database error.");
-                } else {
-                    var lists = list;
                 }
+                res.view('main/index', {
+                    user: req.session.user,
+                    lists: list
+                });
             });
         } else {
-            var lists = [];
+            var list = [];
+            return res.view('main/index', {
+                user: null,
+                lists: list
+            });
         }
-        console.log("User\'s Lists:" + lists);
-        return res.view('main/index', {
-            user: req.session.user,
-            lists: lists
-        });
     },
 
     login: function (req, res) {
         if (req.method == "POST") {
             var email = req.param("email");
             var password = req.param("password");
-
             User.findOneByEmail(email, function (err, usr) {
                 if (err) {
                     res.serverError("Database error.");
