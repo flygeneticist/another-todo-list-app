@@ -15,9 +15,12 @@ module.exports = {
             required: true
         },
         user: {
-            model: 'User',
-            required: true
+            model: 'User'
         },
-        items: {collection: 'Item'}
+        items: {
+            collection: 'Item',
+            via: 'list',
+            defaultsTo: []
+        }
     }
 };

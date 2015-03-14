@@ -24,6 +24,11 @@ module.exports = {
         active: {
             type: 'boolean',
             defaultsTo: true
+        },
+        lists: {
+            collection: 'List',
+            via: 'user',
+            defaultsTo: []
         }
     }
 

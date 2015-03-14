@@ -13,8 +13,7 @@ module.exports = {
             required: true
         },
         list: {
-            model: 'List',
-            required: true
+            model: 'List'
         },
         dueDate: {
             type:'datetime',

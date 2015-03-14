@@ -1,12 +1,9 @@
 <div id="main">
     <% if (!req.session.user) { %>
         <h3>Please login or sign-up to save your lists.</h3>
-    <% } %>
-    <% if (!lists || lists == []) { %>
-        <h4>You have no active lists! :( Click the button below to make a new list now.</h4>
-    <% } %>
-    <button id="newListBtn" class="btn btn-info list-trigger">Make a New List!</button>
-    <div id="newListModal" style="display:none;">
+    <% } else { %>
+        <button id="newListBtn" class="btn btn-info list-trigger">Make a New List!</button>
+        <div id="newListModal" style="display:none;">
         <header class="popupHeader">
         <span class="header_title">Create A New List</span>
         <span class="modal_close"><i class="fa fa-times"></i></span>
@@ -15,21 +12,19 @@
             <form id="newListForm" class="form" method="POST" action="/list/create">
                 <label>List Title:</label>
                 <input id="title" name="title" type="text">
-                <input id="userId" name="userId" type="hidden" value=
-                    <% if (!req.session.user) { %>
-                        <%= "temp-user" %>
-                    <% } else { %>
-                        <%= req.session.user.email %>
-                    <% } %>
-                >
+                <input id="userId" name="userId" type="hidden" value=<%= req.session.user.email %>>
                 <button id="newListSubmit" class="btn btn-info list-trigger"type="submit" value="Sumbit">Submit</button>
             </form>
         </section>
     </div>
+    <% } %>
+    <% if (!lists || lists == []) { %>
+        <h4>You have no active lists! :(</h4>
+    <% } %>
 </div>
 <div id="master-box" class="container">
     <% _.each(lists, function (list) { %>
-        <div id="list-box" class="row">
+        <div class="row list-box" id="<%= list.id.toString() %>">
             <div id="list-header" class="row">
                 <div id="list-title" class="col-md-9">
                     <h3 id="list-title"><%= list.title %></h3>
@@ -53,7 +48,7 @@
                         </tr>
                         <% if ((list.items).length > 0) { %>
                             <% _.each(list.items, function (item) { %>
-                                <tr id="item-row">
+                                <tr class="item-row" id="<%= item.id %>">
                                     <td><%= item.title %></td>
                                     <td><%= item.description %></td>
                                     <td><%= item.dueDate %></td>
@@ -81,40 +76,3 @@
         </div>
     <% }); %>
 </div>
-
-<script type="text/javascript">
-/*
- * Toggles the new list dialog form visability on clicking button
-*/
-    $(".list-trigger").click(function () {
-        $("#newListModal").toggle();
-    });
-</script>
-
-<script type="text/javascript">
-/*
- * Deletes the list on clicking button
-*/
-    $(document).on("click", "#deleteListBtn", function (){
-        $(this).parents('#list-box').fadeOut(300, function() { $(this).remove(); });
-    });
-</script>
-
-<script type="text/javascript">
-/*
- * Toggles the list's items into view on clicking button
-*/
-    $(document).on("click", "#addItemBtn", function (){
-        alert("TO DO: Add a item to the child table on click...");
-        $(this).children('#table tr:last').after('<tr id="item-row"><td>New Item</td><td>description...</td><td>03/01/2015</td><td>DUE!</td></tr>');
-    });
-</script>
-
-<script type="text/javascript">
-/*
- * Toggles the list's items visability on clicking button
-*/
-    $('#itemCntBtn').click(function (){
-        $($(this).parents('#list-box')).children("#list-items").toggle();
-    });
-</script>
