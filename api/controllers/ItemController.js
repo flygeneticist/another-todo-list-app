@@ -21,7 +21,7 @@ module.exports = {
 
     Item.create({ title: title, listId: listId}, function (error, item) {
       if (error) res.serverError("Database creation error.");
-      else res.send(200, {new_item: item});
+      res.redirect(307, '/');
     });
   },
 /**

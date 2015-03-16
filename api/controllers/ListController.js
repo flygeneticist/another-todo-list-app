@@ -54,11 +54,11 @@ module.exports = {
    */
   delete: function (req, res) {
     var id = req.param('id');
-    List.delete({where: {id: id}}, function(err, suc){
+    List.destroy({where: {id: id}}, function(err, success){
       if (err) {
         res.serverError("Database Error");
       }
-      res.redirect(307, '/');
+      return success;
     });
   }
 };

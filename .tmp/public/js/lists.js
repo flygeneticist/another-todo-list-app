@@ -10,8 +10,20 @@ $(document).ready(function () {
      * Deletes the list on clicking button
     */
         $(document).on("click", "#deleteListBtn", function (){
-            var id = $(this).parents('.list-box').id;
-            console.log(id);
-            $(this).parents('.list-box').fadeOut(300, function() { $(this).remove(); });
+            var box = $(this).parents('.list-box');
+            var id = box[0]["id"];
+            console.log("ID:"+id);
+            $.ajax({
+                type: 'POST',
+                url: '/list/delete?id='+id,
+                dataType: 'html',
+                success: function(html, textStatus) {
+                    console.log("Deleted record: " + id);
+                },
+                error: function(err) {
+                    alert('An error occurred!' + err);
+                }
+            });
+            $('#'+id).fadeOut(300, function() { $('#'+id).remove(); });
         });
 });
