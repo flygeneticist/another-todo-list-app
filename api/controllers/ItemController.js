@@ -6,13 +6,13 @@
  */
 
 module.exports = {
-/**
+  /**
    * `ItemsController.index()`
    */
   index: function (req, res) {
     return res.forbidden();
   },
-/**
+  /**
    * `ItemsController.create()`
    */
   create: function (req, res) {
@@ -24,23 +24,34 @@ module.exports = {
       res.redirect(307, '/');
     });
   },
-/**
+  /**
    * `ItemsController.show()`
    */
   show: function (req, res) {
-    return res.forbidden();
+    Item.find({where: {list: req.param('id')}}, function (err, items) {
+      if (err) {
+        res.serverError("Database Error");
+      }
+      res.send(200, items);
+    });
   },
-/**
+  /**
    * `ItemsController.edit()`
    */
   edit: function (req, res) {
     return res.forbidden();
   },
-/**
+  /**
    * `ItemsController.delete()`
    */
   delete: function (req, res) {
-    return res.forbidden();
+    var id = req.param('id');
+    Item.destroy({where: {id: id}}, function(err, success){
+      if (err) {
+        res.serverError("Database Error");
+      }
+      return success;
+    });
   }
 };
 
