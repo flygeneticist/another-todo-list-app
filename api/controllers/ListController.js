@@ -41,7 +41,12 @@ module.exports = {
    * `ListsController.show()`
    */
   show: function (req, res) {
-    return res.forbidden();
+    List.find({where: {user: req.param('userId')}}, function (err, lists) {
+      if (err) {
+        res.serverError("Database Error");
+      }
+      res.send(200, lists);
+    });
   },
 /**
    * `ListsController.edit()`

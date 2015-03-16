@@ -9,11 +9,11 @@
         <span class="modal_close"><i class="fa fa-times"></i></span>
         </header>
         <section class="popupBody">
-            <form id="newListForm" class="form" method="POST" action="/list/create">
+            <form id="newListForm" class="form" action="#">
                 <label>List Title:</label>
                 <input id="title" name="title" type="text" autofocus="" required>
                 <input id="userId" name="userId" type="hidden" value=<%= req.session.user.email %>>
-                <button id="newListSubmit" class="btn btn-info list-trigger"type="submit" value="Sumbit">Submit</button>
+                <button id="newListSubmit" class="btn btn-info" type="submit" value="Sumbit">Submit</button>
             </form>
         </section>
     </div>
@@ -40,30 +40,34 @@
             <div id="list-items" class="container row" style="display: none;">
                 <div class="col-md-9">
                     <table id="item-table" class="table table-striped table-hover">
-                        <tr>
-                            <th>Title</th>
-                            <th>Description</th>
-                            <th>Due Date</th>
-                            <th>Complete</th>
-                        </tr>
-                        <% _.each(list.items, function (item) { %>
-                            <tr class="item-row" id="<%= item.id %>">
-                                <td><%= item.title %></td>
-                                <td><%= item.description %></td>
-                                <td><%= item.dueDate %></td>
-                                <td>
-                                    <% if (item.complete) { %>
-                                        <span class="glyphicon glyphicon-ok"></span>
-                                    <% } else { %>
-                                        <span class="glyphicon glyphicon-minus"></span>
-                                    <% } %>
-                                </td>
-                                <td>
-                                    <button id="item-edit" class="btn btn-xs btn-success"><span class="glyphicon glyphicon-pencil"></span></button>
-                                    <button id="item-delete" class="btn btn-xs  btn-danger"><span class="glyphicon glyphicon-trash"></span></button>
-                                </td>
+                        <thead>
+                            <tr>
+                                <th>Title</th>
+                                <th>Description</th>
+                                <th>Due Date</th>
+                                <th>Complete</th>
                             </tr>
-                        <% }); %>
+                        </thead>
+                        <tbody>
+                            <% _.each(list.items, function (item) { %>
+                                <tr class="item-row" id="<%= item.id %>">
+                                    <td><%= item.title %></td>
+                                    <td><%= item.description %></td>
+                                    <td><%= item.dueDate %></td>
+                                    <td>
+                                        <% if (item.complete) { %>
+                                            <span class="glyphicon glyphicon-ok"></span>
+                                        <% } else { %>
+                                            <span class="glyphicon glyphicon-minus"></span>
+                                        <% } %>
+                                    </td>
+                                    <td>
+                                        <button id="item-edit" class="btn btn-xs btn-success"><span class="glyphicon glyphicon-pencil"></span></button>
+                                        <button id="item-delete" class="btn btn-xs  btn-danger"><span class="glyphicon glyphicon-trash"></span></button>
+                                    </td>
+                                </tr>
+                            <% }); %>
+                        </tbody>
                     </table>
                 </div>
             </div>
