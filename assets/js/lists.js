@@ -2,7 +2,7 @@ $(document).ready(function () {
     /*
      * Toggles the new list dialog form visability on clicking button
     */
-        $(".list-trigger").click(function () {
+        $("#newListBtn").click(function () {
             $("#newListModal").toggle();
         });
 
@@ -11,7 +11,7 @@ $(document).ready(function () {
     */
         $(document).on("click", "#deleteListBtn", function (){
             var box = $(this).parents('.list-box');
-            var id = box[0]["id"];
+            var id = box[0].id;
             console.log("ID:"+id);
             $.ajax({
                 type: 'POST',
@@ -30,7 +30,7 @@ $(document).ready(function () {
     /*
      * Creates the list on clicking button
     */
-        $(document).on("click", "#newListSubmit", function (){
+        $(document).on("click", "#newListSubmit", function () {
             var title = $("#title").val();
             var userId = $("#userId").val();
             $.ajax({
@@ -46,15 +46,14 @@ $(document).ready(function () {
             });
 
             // jQuery AJAX call for JSON
-            $.getJSON( '/list/show?userId='+userId, function( data ) {
-
-                $.each(data, function(){
+            $.getJSON('/list/show?userId='+userId, function (data) {
+                $.each(data, function () {
                     // Add a table row and cells to the content string
                     listHtml =  '<div class="row list-box" id="'+this._id+'">';
                     listHtml += '<div id="list-header" class="row"><div id="list-title" class="col-md-9">';
                     listHtml += '<h3 id="list-title">'+this.title+'</h3></div>';
                     listHtml += '<div id="list-edits" class="col-md-3">';
-                    listHtml += '<button id="itemCntBtn" class="btn btn-info btn-sm" type="button">Items <span class="badge">'+(this.items).length+'</span></button>'
+                    listHtml += '<button id="itemCntBtn" class="btn btn-info btn-sm" type="button">Items <span class="badge">'+(this.items).length+'</span></button>';
                     listHtml += '<button id="addItemBtn" class="btn btn-sm btn-success">New Item</button>';
                     listHtml += '<button id="deleteListBtn" class="btn btn-sm btn-danger"><span class="glyphicon glyphicon-remove-sign"></span></button></div></div>';
                     listHtml += '<div id="list-items" class="container row" style="display: none;">';
@@ -66,8 +65,8 @@ $(document).ready(function () {
                     listHtml += '<td><button id="item-edit" class="btn btn-xs btn-success"><span class="glyphicon glyphicon-pencil"></span></button>';
                     listHtml += '<button id="item-delete" class="btn btn-xs  btn-danger"><span class="glyphicon glyphicon-trash"></span></button></td></tr>';
                     listHtml += '</tbody></div>';
-                }
-            }
+                });
+            });
             // Inject the content string into table
             $('#item-table table tbody').html(listHtml);
         });

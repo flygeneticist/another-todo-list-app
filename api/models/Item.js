@@ -17,7 +17,7 @@ module.exports = {
         },
         dueDate: {
             type:'datetime',
-            defaultsTo: null
+            required: true
         },
         complete: {
             type:'boolean',
